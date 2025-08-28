@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './Servicos.css';
+import '../pages/css/Servicos.css';
 
 const Servicos = () => {
     useEffect(() => {

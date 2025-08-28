@@ -1,8 +1,8 @@
-// Frontend/src/pages/Contato.jsx
+
 
 import React, { useState, useEffect } from 'react'; // Keep useState for form data
 import { Link } from 'react-router-dom';
-import './Contato.css';
+import '../pages/css/Contato.css';
 
 const Contato = () => {
     // --- Existing useEffect for theme and mobile nav (retained as you had it) ---

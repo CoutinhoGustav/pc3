@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './Agendamento.css';
+import '../pages/css/Agendamento.css';
 
 const Agendamento = () => {
   const [isChatbotVisible, setIsChatbotVisible] = useState(false);

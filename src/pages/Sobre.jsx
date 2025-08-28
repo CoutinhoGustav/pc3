@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Sobre.css';
+import '../pages/css/Sobre.css';
 
 export default function Sobre() {
   const [darkTheme, setDarkTheme] = useState(false);

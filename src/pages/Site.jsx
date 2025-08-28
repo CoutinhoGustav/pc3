@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import './Site.css';
 import { Link } from 'react-router-dom';
 import Imagem from '../assets/img/ImagemExemploConsultorio.jpg';
+import '../pages/css/Site.css';
 
 export default function Site() {
   const [darkTheme, setDarkTheme] = useState(false);

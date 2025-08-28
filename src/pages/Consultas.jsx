@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
-import './Consultas.css';
+import '../pages/css/Consultas.css';
 
 const Consultas = () => {
   const navigate = useNavigate();
