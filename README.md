@@ -1,12 +1,62 @@
-# React + Vite
+Projeto de um Consultório Médico
+Descrição do Projeto
+Projeto de uma pequena rede chamada Consulltório Saúde+ onde o usuário pode ter um gerenciamento de consultas, especialidades e atendimentos. 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tecnologias Utilizadas
+Frontend: React e CSS
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Interface Frontend React
+Design responsivo com CSS
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Grupo
+
+Luciana
+
+Responsabilidades:
+
+
+Frontend - Gustavo
+Responsabilidades:
+
+Desenvolvimento da interface em React
+Implementação de componentes de chat
+Criação de telas de agendamento
+Estilização com CSS
+
+Documentação - Luciana, Gustavo
+Responsabilidades:
+
+Criação da documentação técnica
+Criação do Readme
+Funcionalidades Principais
+Agendamento de consultas via chat
+Gerenciamento de especialidades médicas
+Cadastro e controle de profissionais
+Interface responsiva e moderna
+Instalação e Configuração
+
+# Clone o repositório
+git clone [url-do-repositorio]
+
+# Backend (Python)
+cd [backend]
+node nome-do-arquivo.js
+
+# Frontend (React)
+cd frontend
+cd projeto-react
+npm install (se for necessário)
+npm install react-router-dom
+npm start
+
+
+
+#Abra um terminal e entre no backend
+#Rodar o backend
+node nome-arquivo.js
+
+#Abra outro terminal e entre no frontend
+cd Frontend
+npm start
