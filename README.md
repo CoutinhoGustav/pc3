@@ -45,7 +45,7 @@ Instalação e Configuração
 # Clone o repositório
 git clone [url-do-repositorio]
 
-# Backend (Python)
+# Backend ()
 cd [backend]
 node nome-do-arquivo.js
 
