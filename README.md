@@ -17,6 +17,11 @@ Luciana
 Responsabilidades:
 
 
+
+Victor Gabriel Alves de Carvalho Xavier
+Responsabilidades:
+
+
 Frontend - Gustavo
 Responsabilidades:
 
