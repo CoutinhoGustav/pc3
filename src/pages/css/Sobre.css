@@ -308,171 +308,112 @@
             }
         }
 
-        /* Media Queries (from Site.html) */
-        @media (max-width: 767px) {
-            .home-page {
-                padding: 20px;
-                flex-direction: column;
-                align-items: center;
-            }
+        /* 📱 MOBILE STYLES */
+@media (max-width: 767px) {
+    .home-page {
+        padding: 15px;
+        flex-direction: column;
+        align-items: center;
+    }
 
-            .header-section {
-                height: auto;
-                padding: 10px;
-            }
+    /* HEADER */
+    .header-section {
+        height: auto;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-            .header-logo {
-                font-size: 24px;
-            }
+    .header-logo {
+        font-size: 22px;
+    }
 
-            .header-nav {
-                width: 100%;
-                justify-content: space-between;
-            }
+    /* NAV */
+    .header-nav {
+        width: auto;
+        position: relative;
+    }
 
-            .header-nav-list {
-                height: 400px;
-                width: 80%;
-                background-color: var(--secondaryColor);
-                border-radius: 20px;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-around;
-                position: absolute;
-                top: 50px;
-                right: 30px;
-                z-index: 999;
-                display: none;
-                transform: translateX(200%);
-                transition: all 1s ease;
-            }
+    .header-nav-list {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 80%;
+        height: auto;
+        background-color: var(--secondaryColor);
+        border-radius: 12px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 20px;
+        padding: 20px 0;
+        display: none; /* hidden por padrão */
+        transform: translateX(120%);
+        transition: transform 0.5s ease;
+        z-index: 1000;
+    }
 
-            .header-nav-list > li > a:hover {
-                color: var(--btnTxtColor);
-            }
+    .header-nav-list.active {
+        display: flex;
+        transform: translateX(0);
+    }
 
-            .header-nav-list > li > a::after {
-                background-color: var(--btnTxtColor);
-            }
+    .header-nav-list li a {
+        font-size: 18px;
+        color: var(--btnTxtColor);
+    }
 
-            .header-nav-list > li > a:hover::after {
-                width: 90%;
-            }
+    .header-nav-list li a:hover {
+        color: var(--primaryColor);
+    }
 
-            .header-nav-list li.active a {
-                color: var(--btnTxtColor);
-            }
+    /* MOBILE NAV ICON */
+    .mobile-nav-icon {
+        display: block;
+        font-size: 28px;
+        margin-left: auto;
+        cursor: pointer;
+    }
 
-            .mobile-nav-icon {
-                display: block;
-                font-size: 28px;
-                margin: -3px 0px 0px 187px;
-            }
+    .theme-change {
+        margin-left: 10px;
+        font-size: 20px;
+    }
 
-            .theme-change {
-                cursor: pointer;
-                color: var(--mainTxtColor);
-                animation: navbar 1s ease forwards;
-            }
+    /* CONTEÚDO */
+    .content-container {
+        padding: 20px 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
 
-            .content-container {
-                padding: 30px 20px;
-                border-radius: 10px;
-            }
+    .content-container h2 {
+        font-size: 26px;
+    }
 
-            .content-container h2 {
-                font-size: 30px;
-            }
+    .content-container p {
+        font-size: 16px;
+    }
 
-            .social-icon-list {
-                gap: 50px;
-                margin: 20px 0;
-            }
+    .content-container ul {
+        font-size: 16px;
+    }
 
-            .social-icon-list a {
-                width: 100px;
-                height: 100px;
-            }
+    /* SOCIAL ICONS */
+    .social-icon-list {
+        position: static;
+        margin: 20px 0 0;
+        gap: 20px;
+    }
 
-            .social-icon-list svg {
-                width: 40px;
-                height: 40px;
-            }
-        }
+    .social-icon-list a {
+        width: 50px;
+        height: 50px;
+    }
 
-        @media (max-width: 1024px) and (min-width: 768px) {
-            .home-page {
-                padding: 15px;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .header-section {
-                height: auto;
-                padding: 12px;
-            }
-
-            .header-logo {
-                font-size: 26px;
-            }
-
-            .header-nav {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .header-nav-list {
-                height: 400px;
-                width: 80%;
-                background-color: var(--secondaryColor);
-                border-radius: 20px;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-around;
-                position: absolute;
-                top: 50px;
-                right: 30px;
-                z-index: 999;
-                display: none;
-                transform: translateX(200%);
-                transition: all 1s ease;
-            }
-            .header-nav-list li.active a {
-                color: var(--btnTxtColor);
-            }
-
-            .mobile-nav-icon {
-                display: block;
-                font-size: 26px;
-                margin: 0px 0px 0px 586px;
-            }
-            .theme-change {
-                margin: 0px 0px;
-                cursor: pointer;
-                color: var(--mainTxtColor);
-                animation: navbar 1s ease forwards;
-            }
-
-            .content-container {
-                padding: 35px 15px;
-            }
-
-            .content-container h2 {
-                font-size: 32px;
-            }
-
-            .social-icon-list {
-                gap: 40px;
-                margin: 18px 0;
-            }
-
-            .social-icon-list a {
-                width: 90px;
-                height: 90px;
-            }
-
-            .social-icon-list svg {
-                width: 35px;
-                height: 35px;
-            }
-        }
+    .social-icon-list svg {
+        width: 24px;
+        height: 24px;
+    }
+}
