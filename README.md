@@ -42,7 +42,6 @@ O **Consulltório Saúde+** é um projeto de uma pequena rede de consultórios m
 ##  Estrutura do projeto
 ```
 pc3/
-├── node_modules/
 ├── public/
 │   ├── index.html
 │   └── vite.svg
