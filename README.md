@@ -77,9 +77,9 @@ pc3/
 
 ---
 
-## ⚙️ Instalação e Configuração
+##   Instalação e Configuração
 
-### 1️⃣ Clonar o repositório
+###  Clonar o repositório
 ```bash
 git clone https://github.com/CoutinhoGustav/pc3
 ```
