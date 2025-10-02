@@ -18,7 +18,6 @@ Responsabilidades:
 Apresentação do projeto
 
 
-
 Victor Gabriel Alves de Carvalho Xavier
 
 Responsabilidades:
@@ -54,6 +53,6 @@ npm start
 
 
 
-#Abra um terminal (cmd ou bash) e entre no frontend
+# Opção para abrir um terminal (cmd ou bash) e entre no frontend
 cd Frontend
 npm start
