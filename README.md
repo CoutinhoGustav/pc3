@@ -107,4 +107,4 @@ Este projeto está sob a licença **MIT**.
 
 ---
 
-🔹 Projeto desenvolvido por **Luciana, Victor e Gustavo**
+* Projeto desenvolvido por **Luciana, Victor e Gustavo**
