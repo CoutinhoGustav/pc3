@@ -41,7 +41,7 @@ Interface responsiva e moderna
 Instalação e Configuração
 
 # Clone o repositório
-git clone [url-do-repositorio]
+git clone https://github.com/CoutinhoGustav/pc3
 
 
 # Frontend (React)
