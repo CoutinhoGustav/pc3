@@ -103,7 +103,7 @@ npm start
 
 ---
 
-## 📜 Licença
+##  Licença
 Este projeto está sob a licença **MIT**.  
 
 ---
