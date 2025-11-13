@@ -6,11 +6,14 @@ const Agendamento = () => {
   const [isChatbotVisible, setIsChatbotVisible] = useState(false);
   const [darkTheme, setDarkTheme] = useState(false);
   const [messages, setMessages] = useState([
-    { text: "Bem-vindo(a)! Sou a IA Aura, digite oi para começarmos.", sender: "bot" }
+    {
+      text: 'Bem-vindo(a)! Sou a IA Aura, digite oi para começarmos.',
+      sender: 'bot',
+    },
   ]);
   const [userInput, setUserInput] = useState('');
   const [isLoadingResponse, setIsLoadingResponse] = useState(false);
-  
+
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'light';
     setDarkTheme(savedTheme === 'dark');
@@ -23,45 +26,53 @@ const Agendamento = () => {
 
   const toggleChatbot = () => setIsChatbotVisible(!isChatbotVisible);
   const closeChatbot = () => setIsChatbotVisible(false);
-  const toggleTheme = () => setDarkTheme(prev => !prev);
+  const toggleTheme = () => setDarkTheme((prev) => !prev);
 
   const sendMessage = async () => {
     if (userInput.trim() === '') return;
 
-    const newMessage = { text: userInput, sender: "user" };
-    setMessages(prev => [...prev, newMessage]);
+    const newMessage = { text: userInput, sender: 'user' };
+    setMessages((prev) => [...prev, newMessage]);
     setUserInput('');
     setIsLoadingResponse(true);
 
     try {
-      const response = await fetch('http://localhost:5005/webhooks/rest/webhook', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          sender: "usuario_frontend", // Pode ser um UUID fixo ou gerado por sessão
-          message: userInput
-        }),
-      });
+      const response = await fetch(
+        'http://localhost:5005/webhooks/rest/webhook',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            sender: 'usuario_frontend', // Pode ser um UUID fixo ou gerado por sessão
+            message: userInput,
+          }),
+        }
+      );
 
       const data = await response.json();
 
       if (data.length === 0) {
-        setMessages(prev => [...prev, { text: "Desculpe, não entendi sua mensagem.", sender: "bot" }]);
+        setMessages((prev) => [
+          ...prev,
+          { text: 'Desculpe, não entendi sua mensagem.', sender: 'bot' },
+        ]);
       } else {
-        const botMessages = data.map(msg => ({
-          text: msg.text || "[resposta vazia]",
-          sender: "bot"
+        const botMessages = data.map((msg) => ({
+          text: msg.text || '[resposta vazia]',
+          sender: 'bot',
         }));
-        setMessages(prev => [...prev, ...botMessages]);
+        setMessages((prev) => [...prev, ...botMessages]);
       }
-
     } catch (error) {
-      console.error("Erro ao comunicar com o Rasa:", error);
-      setMessages(prev => [
+      console.error('Erro ao comunicar com o Rasa:', error);
+      setMessages((prev) => [
         ...prev,
-        { text: "Erro ao se comunicar com a IA. Tente novamente mais tarde.", sender: "bot" }
+        {
+          text: 'Erro ao se comunicar com a IA. Tente novamente mais tarde.',
+          sender: 'bot',
+        },
       ]);
     } finally {
       setIsLoadingResponse(false);
@@ -115,8 +126,14 @@ const Agendamento = () => {
 
         <div className="card-body chatbot-body">
           {messages.map((msg, index) => (
-            <p key={index} className={`text-left ${msg.sender === 'user' ? 'user-message' : 'bot-message'}`}>
-              <strong>{msg.sender === 'user' ? 'Você: ' : 'Aura IA: '}</strong>{msg.text}
+            <p
+              key={index}
+              className={`text-left ${
+                msg.sender === 'user' ? 'user-message' : 'bot-message'
+              }`}
+            >
+              <strong>{msg.sender === 'user' ? 'Você: ' : 'Aura IA: '}</strong>
+              {msg.text}
             </p>
           ))}
           {isLoadingResponse && (
@@ -136,7 +153,11 @@ const Agendamento = () => {
             onKeyPress={handleKeyPress}
             disabled={isLoadingResponse}
           />
-          <button id="sendButton" onClick={sendMessage} disabled={isLoadingResponse}>
+          <button
+            id="sendButton"
+            onClick={sendMessage}
+            disabled={isLoadingResponse}
+          >
             Enviar
           </button>
         </div>

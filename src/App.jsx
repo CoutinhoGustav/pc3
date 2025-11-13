@@ -6,14 +6,14 @@ import Sobre from './pages/Sobre';
 import Contato from './pages/Contato';
 import Agendamento from './pages/Agendamento';
 import Login from './pages/Login';
+import Cadastro from './pages/Cadastro';
 import Dashboard from './pages/Dashboard';
 import Consultas from './pages/Consultas';
 import Perfil from './pages/Perfil';
+
 function App() {
   return (
     <Router>
-      
-
       <Routes>
         <Route path="/" element={<Site />} />
         <Route path="/servicos" element={<Servicos />} />
@@ -21,8 +21,9 @@ function App() {
         <Route path="/contato" element={<Contato />} />
         <Route path="/agendamento" element={<Agendamento />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="consultas" element={<Consultas />} />
+        <Route path="/consultas" element={<Consultas />} />
         <Route path="/perfil" element={<Perfil />} />
       </Routes>
     </Router>

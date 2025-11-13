@@ -7,31 +7,29 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
-
 .container-card {
-    width: 50%;
-    margin: 80px 0 0px 69px;
+  width: 50%;
+  margin: 80px 0 0px 69px;
 }
 
-.p{
+.p {
   color: var(--card-bg);
 }
 .content {
-        flex: 1 1;
-    padding: 30px;
-    background-color: var(--content-bg);
-    position: relative;
-    transition: background-color 0.3s;
+  flex: 1 1;
+  padding: 30px;
+  background-color: var(--content-bg);
+  position: relative;
+  transition: background-color 0.3s;
 }
 .sidebar {
-    background-color: var(--sidebar-bg);
-    color: var(--sidebar-text);
-    padding: 20px;
-    width: 220px;
-    display: flex
-;
-    flex-direction: column;
-    transition: background-color 0.3s, color 0.3s;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  padding: 20px;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .sidebar h2 {

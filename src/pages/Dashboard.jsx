@@ -6,7 +6,8 @@ const noticias = [
   {
     id: 1,
     titulo: 'Novos especialistas disponíveis!',
-    descricao: 'Atendimento com Proctologista, Otorrino, Obstetrísta e Alergista já disponível.',
+    descricao:
+      'Atendimento com Proctologista, Otorrino, Obstetrísta e Alergista já disponível.',
   },
   {
     id: 2,
@@ -31,7 +32,8 @@ const noticias = [
   {
     id: 6,
     titulo: 'Evento de Bem-Estar (20/08 às 8:00)',
-    descricao: 'Venha participar deste evento, onde teremos: Meditação, fisioterapia e nutrição. Venha e participe!',
+    descricao:
+      'Venha participar deste evento, onde teremos: Meditação, fisioterapia e nutrição. Venha e participe!',
   },
 ];
 
@@ -49,7 +51,7 @@ const Dashboard = () => {
     localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
   }, [darkTheme]);
 
-  const toggleTheme = () => setDarkTheme(prev => !prev);
+  const toggleTheme = () => setDarkTheme((prev) => !prev);
 
   const handleLogout = () => {
     navigate('/login');
@@ -66,12 +68,18 @@ const Dashboard = () => {
 
         <nav>
           <ul>
-            <li><Link to="/perfil">Perfil</Link></li>
-            <li><Link to="/consultas">Consultas</Link></li>
-            <li><Link to="/agendamento">Agendamento</Link></li>
             <li>
-              <button 
-                onClick={handleLogout} 
+              <Link to="/perfil">Perfil</Link>
+            </li>
+            <li>
+              <Link to="/consultas">Consultas</Link>
+            </li>
+            <li>
+              <Link to="/agendamento">Agendamento</Link>
+            </li>
+            <li>
+              <button
+                onClick={handleLogout}
                 type="button"
                 aria-label="Fazer logout"
                 className="logout-button"
@@ -89,7 +97,7 @@ const Dashboard = () => {
         <section className="noticias">
           <h2>Notícias do consultório</h2>
           <div className="cards-container">
-            {noticias.map(noticia => (
+            {noticias.map((noticia) => (
               <div key={noticia.id} className="card-noticia">
                 <div className="icone">{noticia.icone}</div>
                 <h3>{noticia.titulo}</h3>

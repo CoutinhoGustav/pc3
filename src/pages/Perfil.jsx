@@ -202,8 +202,6 @@ const Perfil = () => {
       </aside>
 
       <main className="perfil-container">
-        
-
         <div className="foto-container">
           <img
             src={formData.fotoPerfil || '/user-placeholder.png'}

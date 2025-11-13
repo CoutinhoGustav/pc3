@@ -7,6 +7,7 @@ const Login = () => {
   const [senha, setSenha] = useState('');
   const navigate = useNavigate();
 
+  // 🎨 Controle do modo escuro
   useEffect(() => {
     const themeChangeIcon = document.getElementById("themeChangeIcon");
 
@@ -35,37 +36,45 @@ const Login = () => {
     };
 
     themeChangeIcon.addEventListener('click', handleThemeChange);
-
-    return () => {
-      themeChangeIcon.removeEventListener('click', handleThemeChange);
-    };
+    return () => themeChangeIcon.removeEventListener('click', handleThemeChange);
   }, []);
 
-  // Função para aplicar máscara de CPF
+  // 🧮 Máscara de CPF
   const formatCpf = (value) => {
-    const cleaned = value.replace(/\D/g, '').slice(0, 11); // Remove tudo que não é número
-    const formatted = cleaned
+    const cleaned = value.replace(/\D/g, '').slice(0, 11);
+    return cleaned
       .replace(/(\d{3})(\d)/, '$1.$2')
       .replace(/(\d{3})(\d)/, '$1.$2')
       .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-    return formatted;
   };
 
-  const handleCpfChange = (e) => {
-    const value = e.target.value;
-    const formatted = formatCpf(value);
-    setCpf(formatted);
-  };
+  const handleCpfChange = (e) => setCpf(formatCpf(e.target.value));
 
-  const handleLogin = (e) => {
+  // 🔐 Função de login conectada ao backend
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     const cpfSemFormatacao = cpf.replace(/\D/g, '');
-    if (cpfSemFormatacao === '12345678900' && senha === '1234') {
-      alert('Login efetuado!');
-      navigate('/dashboard');
-    } else {
-      alert('CPF ou senha inválidos!');
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cpf: cpfSemFormatacao, senha }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('✅ Login efetuado com sucesso!');
+        // opcional: salvar token ou usuário no localStorage futuramente
+        navigate('/dashboard');
+      } else {
+        alert(data.message || '❌ CPF ou senha inválidos!');
+      }
+    } catch (error) {
+      console.error('Erro no login:', error);
+      alert('Erro ao conectar ao servidor. Verifique se o backend está rodando.');
     }
   };
 
@@ -111,6 +120,10 @@ const Login = () => {
           </div>
 
           <button type="submit">Entrar</button>
+
+          <p className="signup-link">
+            Ainda não tem conta? <Link to="/cadastro">Cadastre-se aqui</Link>
+          </p>
         </form>
       </div>
     </div>

@@ -48,12 +48,18 @@ const Consultas = () => {
         </div>
         <nav>
           <ul>
-            <li><Link to="/perfil">Perfil</Link></li>
-            <li><Link to="/consultas">Consultas</Link></li>
-            <li><Link to="/agendamento">Agendamento</Link></li>
             <li>
-              <button 
-                onClick={handleLogout} 
+              <Link to="/perfil">Perfil</Link>
+            </li>
+            <li>
+              <Link to="/consultas">Consultas</Link>
+            </li>
+            <li>
+              <Link to="/agendamento">Agendamento</Link>
+            </li>
+            <li>
+              <button
+                onClick={handleLogout}
                 type="button"
                 className="logout-button"
               >
@@ -67,7 +73,7 @@ const Consultas = () => {
       <div className="container-card">
         <div className="cards-wrapper">
           {consultas.length === 0 ? (
-            <p style={{ color: "" }}>Nenhuma consulta agendada.</p>
+            <p style={{ color: '' }}>Nenhuma consulta agendada.</p>
           ) : (
             consultas.map((consulta) => (
               <div key={consulta.id} className="consulta-card">
@@ -78,7 +84,10 @@ const Consultas = () => {
                 <div className="card-body">
                   <h3>{consulta.medico}</h3>
                   <p>{consulta.especialidade}</p>
-                  <button className="pdf-button" onClick={() => gerarPDF(consulta)}>
+                  <button
+                    className="pdf-button"
+                    onClick={() => gerarPDF(consulta)}
+                  >
                     Gerar PDF
                   </button>
                 </div>

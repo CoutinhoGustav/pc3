@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Imagem from '../assets/img/ImagemExemploConsultorio.jpg';
 import '../pages/css/Site.css';
 
 export default function Site() {
@@ -19,50 +18,75 @@ export default function Site() {
     localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
   }, [darkTheme]);
 
-  const toggleTheme = () => setDarkTheme(prev => !prev);
-  const toggleMobileMenu = () => setMobileMenuOpen(prev => !prev);
-
+  const toggleTheme = () => setDarkTheme((prev) => !prev);
+  const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
   const handleLinkClick = () => setMobileMenuOpen(false);
 
   return (
     <div className="home-page">
-      <section className="header-section">
-        {/* Logo */}
+      {/* Cabeçalho */}
+      <header className="header-section">
+        {/* LOGO */}
         <div className="header-logo">
-          <p>Consultório <span>Saúde+</span></p>
+          <p>
+            Consultório <span>Saúde+</span>
+          </p>
         </div>
 
-        {/* Ícone menu mobile + navegação */}
-        <div className="header-nav">
-          <div className="mobile-nav-icon" onClick={toggleMobileMenu}>
-            <i className={`fa-solid ${mobileMenuOpen ? 'fa-close' : 'fa-bars'}`}></i>
-          </div>
-
+        {/* MENU */}
+        <nav className="header-nav">
+          <i class="bi bi-list"></i>
           <ul className={`header-nav-list ${mobileMenuOpen ? 'active' : ''}`}>
-            <li className="active"><Link to="/">Home</Link></li>
-            <li><Link to="/servicos">Serviços</Link></li>
-            <li><Link to="/sobre">Sobre</Link></li>
-            <li><Link to="/contato">Contato</Link></li>
+            <li>
+              <Link to="/" onClick={handleLinkClick}>
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/servicos" onClick={handleLinkClick}>
+                Serviços
+              </Link>
+            </li>
+            <li>
+              <Link to="/sobre" onClick={handleLinkClick}>
+                Sobre
+              </Link>
+            </li>
+            <li>
+              <Link to="/contato" onClick={handleLinkClick}>
+                Contato
+              </Link>
+            </li>
           </ul>
 
+          {/* Ícones: theme e menu mobile */}
+          <div className="header-right">
+            {/* Theme change */}
+            <div className="theme-change" onClick={toggleTheme}>
+              <i className={`fa-solid ${darkTheme ? 'fa-sun' : 'fa-moon'}`}></i>
+            </div>
 
-          {/* Botão troca tema */}
-          <div className="theme-change" onClick={toggleTheme}>
-            <i className={`fa-solid ${darkTheme ? 'fa-sun' : 'fa-moon'}`}></i>
+            {/* Mobile menu icon */}
+            <div className="mobile-nav-icon" onClick={toggleMobileMenu}>
+              <i class="bi bi-list"></i>
+            </div>
           </div>
-        </div>
-      </section>
+        </nav>
+      </header>
 
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
-          <p className="content-header">
-            Bem-vindo(a)
-          </p>
+          <p className="content-header">Bem-vindo(a)</p>
           <p className="content-body">
             Nós somos o Consulta Saúde+ fundado desde 2025.
-            <br /><span>Fazemos atendimentos de segunda a sexta, das 8h às 18h, e aos sábados, das 8h às 12h.</span>
-            <br /><span>Deseja agendar uma consulta? Clique no botão abaixo.</span>
+            <br />
+            <span>
+              Fazemos atendimentos de segunda a sexta, das 8h às 18h, e aos
+              sábados, das 8h às 12h.
+            </span>
+            <br />
+            <span>Deseja agendar uma consulta? Clique no botão abaixo.</span>
           </p>
           <div className="hero-btn">
             <Link to="/login">
@@ -72,7 +96,11 @@ export default function Site() {
         </div>
 
         <div className="hero-image">
-          <img src={Imagem} alt="Imagem do Consultório Médico" className="main-img protected-image" />
+          <img
+            src="https://raw.githubusercontent.com/CoutinhoGustav/pc3/main/src/assets/img/ImagemExemploConsultorio.jpg"
+            alt="Imagem do Consultório Médico"
+            className="main-img protected-image"
+          />
         </div>
       </section>
     </div>
