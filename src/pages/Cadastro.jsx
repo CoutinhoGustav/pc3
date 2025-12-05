@@ -1,31 +1,37 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './css/Login.css';
+import { formatCpf, formatTelefone } from '../utils';
 
 const Cadastro = () => {
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [telefone, setTelefone] = useState('');
   const [cpf, setCpf] = useState('');
   const [senha, setSenha] = useState('');
   const navigate = useNavigate();
 
-  const formatCpf = (value) => {
-    const cleaned = value.replace(/\D/g, '').slice(0, 11);
-    return cleaned
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-  };
-
   const handleCpfChange = (e) => setCpf(formatCpf(e.target.value));
+  const handleTelefoneChange = (e) => setTelefone(formatTelefone(e.target.value));
 
   const handleCadastro = async (e) => {
     e.preventDefault();
 
     const cpfSemFormatacao = cpf.replace(/\D/g, '');
+
+    const dadosUsusario = {
+      cpf: cpfSemFormatacao,
+      senha,
+      nome,
+      email,
+      telefone,
+    };
+
     try {
       const res = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cpf: cpfSemFormatacao, senha }),
+        body: JSON.stringify({ dadosUsusario }),
       });
 
       const data = await res.json();
@@ -54,6 +60,18 @@ const Cadastro = () => {
           <h2>Cadastro</h2>
 
           <div className="input-group">
+            <label htmlFor="nome">Nome Completo</label>
+            <input
+              type="text"
+              id="nome"
+              placeholder="Digite seu nome"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="input-group">
             <label htmlFor="cpf">CPF</label>
             <input
               type="text"
@@ -62,6 +80,30 @@ const Cadastro = () => {
               value={cpf}
               onChange={handleCpfChange}
               maxLength="14"
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="exemplo@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="telefone">Telefone</label>
+            <input
+              type="text"
+              id="telefone"
+              placeholder="(00) 00000-0000"
+              value={telefone}
+              onChange={handleTelefoneChange}
               required
             />
           </div>

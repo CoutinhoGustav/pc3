@@ -6,14 +6,19 @@ const router = express.Router();
 // 📩 Rota de cadastro
 router.post('/register', async (req, res) => {
   try {
-    const { cpf, senha } = req.body;
+    const { cpf, senha, nome, email, telefone } = req.body;
 
     const userExists = await User.findOne({ cpf });
     if (userExists) return res.status(400).json({ message: 'Usuário já existe' });
 
     const hashedPassword = await bcrypt.hash(senha, 10);
 
-    const newUser = new User({ cpf, senha: hashedPassword });
+    const newUser = new User({
+      nome,
+      email,
+      telefone,
+      cpf, senha: hashedPassword
+    });
     await newUser.save();
 
     res.status(201).json({ message: 'Usuário cadastrado com sucesso!' });

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../pages/css/Login.css';
+import { formatCpf } from '../utils';
 
 const Login = () => {
   const [cpf, setCpf] = useState('');
   const [senha, setSenha] = useState('');
+  const [loginFailed, setLoginFailed] = useState(false);
   const navigate = useNavigate();
 
   // 🎨 Controle do modo escuro
@@ -39,14 +41,6 @@ const Login = () => {
     return () => themeChangeIcon.removeEventListener('click', handleThemeChange);
   }, []);
 
-  // 🧮 Máscara de CPF
-  const formatCpf = (value) => {
-    const cleaned = value.replace(/\D/g, '').slice(0, 11);
-    return cleaned
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-  };
 
   const handleCpfChange = (e) => setCpf(formatCpf(e.target.value));
 
@@ -68,13 +62,16 @@ const Login = () => {
       if (response.ok) {
         alert('✅ Login efetuado com sucesso!');
         // opcional: salvar token ou usuário no localStorage futuramente
+        setLoginFailed(false);
         navigate('/dashboard');
       } else {
         alert(data.message || '❌ CPF ou senha inválidos!');
+        setLoginFailed(true);
       }
     } catch (error) {
       console.error('Erro no login:', error);
       alert('Erro ao conectar ao servidor. Verifique se o backend está rodando.');
+      setLoginFailed(false);
     }
   };
 
@@ -120,6 +117,14 @@ const Login = () => {
           </div>
 
           <button type="submit">Entrar</button>
+
+          {loginFailed && (
+            <p className="signup-link" style={{ marginTop: '1rem', marginBottom: '0' }}>
+              <Link to="/recuperar-senha" style={{ color: '#dc3545' }}>
+                Esqueceu sua senha?
+              </Link>
+            </p>
+          )}
 
           <p className="signup-link">
             Ainda não tem conta? <Link to="/cadastro">Cadastre-se aqui</Link>
