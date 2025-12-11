@@ -86,3 +86,15 @@ button {
   margin-top: 1rem;
   text-align: center;
 }
+@media (max-width: 768px) {
+    .back-link {
+        font-size: 18px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin: 62px 0px 0 24px;
+        display: flex;
+    }
+}
+
