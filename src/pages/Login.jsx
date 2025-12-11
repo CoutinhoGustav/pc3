@@ -55,7 +55,7 @@ const Login = () => {
     if (!senha) return alert("Digite sua senha!");
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(' https://pc3-t3lq.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cpf: cpfLimpo, senha }),
