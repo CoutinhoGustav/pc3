@@ -10,7 +10,7 @@ const Agendamento = () => {
   const [darkTheme, setDarkTheme] = useState(false);
   const navigate = useNavigate();
 
-  const BACKEND_URL = "http://localhost:5000/api/agendamentos";
+  const BACKEND_URL = "https://pc3-t3lq.onrender.com/api/agendamentos";
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "light";

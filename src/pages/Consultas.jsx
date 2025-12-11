@@ -8,7 +8,7 @@ const Consultas = () => {
   const [darkTheme, setDarkTheme] = useState(false);
   const [consultas, setConsultas] = useState([]);
 
-  const BACKEND_URL = "http://localhost:5000/api/agendamentos";
+  const BACKEND_URL = "https://pc3-t3lq.onrender.com/api/agendamentos";
 
   // Função para buscar agendamentos do backend
   const fetchConsultas = async () => {
