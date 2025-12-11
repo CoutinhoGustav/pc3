@@ -1,3 +1,4 @@
+/* Estrutura geral */
 .login-page {
   min-height: 100vh;
   background: var(--bg-color);
@@ -23,6 +24,7 @@
   margin-bottom: 2rem;
 }
 
+/* Inputs */
 .input-group {
   margin-bottom: 1.2rem;
 }
@@ -32,13 +34,15 @@
   margin-bottom: 0.5rem;
 }
 
-.input-group input {
+.input-group input,
+.input-group select {
   width: 100%;
   padding: 0.7rem;
   border: 1px solid #ccc;
   border-radius: 8px;
 }
 
+/* Botão */
 button {
   width: 100%;
   background: #007bff;
@@ -51,6 +55,7 @@ button {
   margin-top: 1rem;
 }
 
+/* Top bar: theme e voltar */
 .theme-change {
   position: fixed;
   top: 20px;
@@ -62,19 +67,7 @@ button {
   padding: 10px;
   border-radius: 50%;
   background: transparent;
-  border: 1px solid transparent;
   transition: background 0.3s, color 0.3s;
-  margin: 10px 2px;
-}
-
-.back-link {
-    color: var(--lightTxtColor);
-    font-size: 18px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin: 62px 0px 0 755px;
 }
 
 .theme-change:hover {
@@ -82,19 +75,58 @@ button {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Botão voltar */
+.back-link {
+  color: var(--lightTxtColor);
+  font-size: 18px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.05);
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.back-link:hover {
+  background-color: rgba(0,0,0,0.1);
+  color: var(--accentColor);
+}
+
+/* Link de registro */
 .register-link {
   margin-top: 1rem;
   text-align: center;
 }
-@media (max-width: 768px) {
-    .back-link {
-        font-size: 18px;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        margin: 62px 0px 0 24px;
-        display: flex;
-    }
-}
 
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+  .login-container {
+    margin-top: 1rem;
+    padding: 2rem;
+    width: 90%;
+  }
+
+  .theme-change {
+    top: 65px;
+    right: 46px;
+    font-size: 18px;
+    padding: 8px;
+  }
+
+  .back-link {
+    top: 65px;
+    left: 45px;
+    font-size: 16px;
+    padding: 6px 8px;
+  }
+
+  .login-container h2 {
+    font-size: 1.5rem;
+  }
+}
