@@ -1,42 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import '../pages/css/Login.css';
 
 const Login = () => {
   const [cpf, setCpf] = useState('');
   const [senha, setSenha] = useState('');
+  const [darkTheme, setDarkTheme] = useState(false);
   const navigate = useNavigate();
 
+  // Inicializa o tema
   useEffect(() => {
-    const themeChangeIcon = document.getElementById("themeChangeIcon");
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setDarkTheme(savedTheme === 'dark');
+    if (savedTheme === 'dark') document.body.classList.add('dark-theme');
+  }, []);
 
-    const applyTheme = (theme) => {
-      if (theme === 'dark') {
+  const toggleTheme = () => {
+    setDarkTheme(prev => {
+      const newTheme = !prev;
+      if (newTheme) {
         document.body.classList.add('dark-theme');
-        themeChangeIcon.classList.replace('fa-moon', 'fa-sun');
+        localStorage.setItem('theme', 'dark');
       } else {
         document.body.classList.remove('dark-theme');
-        themeChangeIcon.classList.replace('fa-sun', 'fa-moon');
+        localStorage.setItem('theme', 'light');
       }
-    };
-
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    applyTheme(savedTheme);
-
-    const handleThemeChange = () => {
-      let theme = 'light';
-      if (document.body.classList.toggle('dark-theme')) {
-        theme = 'dark';
-        themeChangeIcon.classList.replace('fa-moon', 'fa-sun');
-      } else {
-        themeChangeIcon.classList.replace('fa-sun', 'fa-moon');
-      }
-      localStorage.setItem('theme', theme);
-    };
-
-    themeChangeIcon.addEventListener('click', handleThemeChange);
-    return () => themeChangeIcon.removeEventListener('click', handleThemeChange);
-  }, []);
+      return newTheme;
+    });
+  };
 
   const formatCpf = (value) => {
     const cleaned = value.replace(/\D/g, '').slice(0, 11);
@@ -55,7 +48,7 @@ const Login = () => {
     if (!senha) return alert("Digite sua senha!");
 
     try {
-      const response = await fetch(' https://pc3-t3lq.onrender.com/api/auth/login', {
+      const response = await fetch('https://pc3-t3lq.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cpf: cpfLimpo, senha }),
@@ -81,11 +74,16 @@ const Login = () => {
 
         {/* Top Bar com Voltar e Tema */}
         <div className="top-bar">
-          <Link to="/" className="back-link">
-            <i className="fa-solid fa-arrow-left"></i> Voltar
+          {/* Botão voltar apenas mobile */}
+          <Link to="/" className="back-link mobile-only">
+            <FontAwesomeIcon icon={faArrowLeft} /> Voltar
           </Link>
-          <div className="theme-change">
-            <i className="fa-solid fa-moon" id="themeChangeIcon"></i> 
+
+          {/* Ícone de tema */}
+          <div className="header-right">
+            <div className="theme-change" onClick={toggleTheme}>
+              <FontAwesomeIcon icon={darkTheme ? faSun : faMoon} />
+            </div>
           </div>
         </div>
 
