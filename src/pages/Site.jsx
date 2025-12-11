@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../pages/css/Site.css';
 
+// Importações FontAwesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+
 export default function Site() {
   const [darkTheme, setDarkTheme] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -18,8 +22,8 @@ export default function Site() {
     localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
   }, [darkTheme]);
 
-  const toggleTheme = () => setDarkTheme((prev) => !prev);
-  const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
+  const toggleTheme = () => setDarkTheme(prev => !prev);
+  const toggleMobileMenu = () => setMobileMenuOpen(prev => !prev);
   const handleLinkClick = () => setMobileMenuOpen(false);
 
   return (
@@ -35,40 +39,29 @@ export default function Site() {
 
         {/* MENU */}
         <nav className="header-nav">
-          <i class="bi bi-list"></i>
+          <div className="mobile-nav-icon" onClick={toggleMobileMenu}>
+            <i className="bi bi-list"></i>
+          </div>
+
           <ul className={`header-nav-list ${mobileMenuOpen ? 'active' : ''}`}>
             <li>
-              <Link to="/" onClick={handleLinkClick}>
-                Home
-              </Link>
+              <Link to="/" onClick={handleLinkClick}>Home</Link>
             </li>
             <li>
-              <Link to="/servicos" onClick={handleLinkClick}>
-                Serviços
-              </Link>
+              <Link to="/servicos" onClick={handleLinkClick}>Serviços</Link>
             </li>
             <li>
-              <Link to="/sobre" onClick={handleLinkClick}>
-                Sobre
-              </Link>
+              <Link to="/sobre" onClick={handleLinkClick}>Sobre</Link>
             </li>
             <li>
-              <Link to="/contato" onClick={handleLinkClick}>
-                Contato
-              </Link>
+              <Link to="/contato" onClick={handleLinkClick}>Contato</Link>
             </li>
           </ul>
 
-          {/* Ícones: theme e menu mobile */}
+          {/* Ícones: theme */}
           <div className="header-right">
-            {/* Theme change */}
             <div className="theme-change" onClick={toggleTheme}>
-              <i className={`fa-solid ${darkTheme ? 'fa-sun' : 'fa-moon'}`}></i>
-            </div>
-
-            {/* Mobile menu icon */}
-            <div className="mobile-nav-icon" onClick={toggleMobileMenu}>
-              <i class="bi bi-list"></i>
+              <FontAwesomeIcon icon={darkTheme ? faSun : faMoon} />
             </div>
           </div>
         </nav>
@@ -79,7 +72,7 @@ export default function Site() {
         <div className="hero-content">
           <p className="content-header">Bem-vindo(a)</p>
           <p className="content-body">
-            Nós somos o Consulta Saúde+ fundado desde 2025.
+            Nós somos o Consulta Saúde+, fundado desde 2025.
             <br />
             <span>
               Fazemos atendimentos de segunda a sexta, das 8h às 18h, e aos

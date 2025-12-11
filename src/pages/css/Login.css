@@ -67,6 +67,16 @@ button {
   margin: 10px 2px;
 }
 
+.back-link {
+    color: var(--lightTxtColor);
+    font-size: 18px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 62px 0px 0 755px;
+}
+
 .theme-change:hover {
   color: var(--accentColor);
   background-color: rgba(255, 255, 255, 0.1);

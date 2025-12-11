@@ -1,58 +1,101 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const User = require("../models/User"); // <= IMPORTANTE
+const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
-// Rota de cadastro
+// Middleware de autenticação
+const authMiddleware = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader)
+    return res.status(401).json({ message: "Token não fornecido." });
+
+  const token = authHeader.split(" ")[1];
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "secreto123");
+    req.userId = decoded.id;
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Token inválido." });
+  }
+};
+
+// Cadastro
 router.post("/register", async (req, res) => {
   try {
-    const { cpf, senha } = req.body;
-    console.log("Dados recebidos no backend:", req.body);
+    const { cpf, senha, nome, email, telefone, dataNascimento, genero } =
+      req.body;
 
-    // Verificar se o usuário já existe
     const existingUser = await User.findOne({ cpf });
-    if (existingUser) {
+    if (existingUser)
       return res.status(400).json({ message: "Usuário já existe." });
-    }
 
-    // Criptografar senha
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(senha, salt);
+    const hashedPassword = await bcrypt.hash(senha, 10);
 
-    // Criar novo usuário
     const user = new User({
       cpf,
       senha: hashedPassword,
+      nome,
+      email,
+      telefone,
+      dataNascimento,
+      genero,
     });
 
     await user.save();
-
     res.status(201).json({ message: "Usuário cadastrado com sucesso!" });
-  } catch (error) {
-    console.error("🔥 ERRO REAL NO CADASTRO:", error);
+  } catch (err) {
+    console.error("🔥 ERRO NO CADASTRO:", err);
     res.status(500).json({ message: "Erro ao cadastrar usuário." });
   }
 });
 
-// Rota de login
+// Login
 router.post("/login", async (req, res) => {
   try {
     const { cpf, senha } = req.body;
-
     const user = await User.findOne({ cpf });
-    if (!user) {
+    if (!user)
       return res.status(400).json({ message: "CPF ou senha incorretos." });
-    }
 
     const isMatch = await bcrypt.compare(senha, user.senha);
-    if (!isMatch) {
+    if (!isMatch)
       return res.status(400).json({ message: "CPF ou senha incorretos." });
-    }
 
-    res.json({ message: "Login realizado com sucesso!" });
-  } catch (error) {
-    console.error("🔥 ERRO REAL NO LOGIN:", error);
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET || "secreto123",
+      { expiresIn: "1d" }
+    );
+
+    res.json({
+      message: "Login realizado com sucesso!",
+      token,
+      user: {
+        nome: user.nome,
+        email: user.email,
+        telefone: user.telefone,
+        cpf: user.cpf,
+        dataNascimento: user.dataNascimento,
+        genero: user.genero,
+        fotoPerfil: user.fotoPerfil,
+      },
+    });
+  } catch (err) {
+    console.error("🔥 ERRO NO LOGIN:", err);
     res.status(500).json({ message: "Erro no servidor." });
+  }
+});
+
+// Rota protegida - Buscar dados do usuário
+router.get("/user", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select("-senha");
+    if (!user) return res.status(404).json({ message: "Usuário não encontrado." });
+    res.json(user);
+  } catch (err) {
+    console.error("🔥 ERRO AO BUSCAR USUÁRIO:", err);
+    res.status(500).json({ message: "Erro ao buscar usuário." });
   }
 });
 

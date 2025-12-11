@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../pages/css/Sobre.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun, faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
+
 export default function Sobre() {
   const [darkTheme, setDarkTheme] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -16,8 +19,8 @@ export default function Sobre() {
     localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
   }, [darkTheme]);
 
-  const toggleTheme = () => setDarkTheme((prev) => !prev);
-  const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
+  const toggleTheme = () => setDarkTheme(prev => !prev);
+  const toggleMobileMenu = () => setMobileMenuOpen(prev => !prev);
 
   return (
     <div className="home-page">
@@ -29,10 +32,9 @@ export default function Sobre() {
         </div>
         <div className="header-nav">
           <div className="mobile-nav-icon" onClick={toggleMobileMenu}>
-            <i
-              className={`fa-solid ${mobileMenuOpen ? 'fa-close' : 'fa-bars'}`}
-            ></i>
+            <FontAwesomeIcon icon={mobileMenuOpen ? faXmark : faBars} />
           </div>
+
           <ul
             className="header-nav-list"
             style={{
@@ -53,8 +55,9 @@ export default function Sobre() {
               <Link to="/contato">Contato</Link>
             </li>
           </ul>
+
           <div className="theme-change" onClick={toggleTheme}>
-            <i className={`fa-solid ${darkTheme ? 'fa-sun' : 'fa-moon'}`}></i>
+            <FontAwesomeIcon icon={darkTheme ? faSun : faMoon} />
           </div>
         </div>
       </section>

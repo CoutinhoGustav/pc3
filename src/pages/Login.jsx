@@ -7,7 +7,6 @@ const Login = () => {
   const [senha, setSenha] = useState('');
   const navigate = useNavigate();
 
-  // 🎨 Modo escuro
   useEffect(() => {
     const themeChangeIcon = document.getElementById("themeChangeIcon");
 
@@ -39,7 +38,6 @@ const Login = () => {
     return () => themeChangeIcon.removeEventListener('click', handleThemeChange);
   }, []);
 
-  // 🧮 Máscara do CPF
   const formatCpf = (value) => {
     const cleaned = value.replace(/\D/g, '').slice(0, 11);
     return cleaned
@@ -50,21 +48,11 @@ const Login = () => {
 
   const handleCpfChange = (e) => setCpf(formatCpf(e.target.value));
 
-  // 🔐 Função de login
   const handleLogin = async (e) => {
     e.preventDefault();
-
     const cpfLimpo = cpf.replace(/\D/g, '');
-
-    if (cpfLimpo.length !== 11) {
-      alert("Digite um CPF válido!");
-      return;
-    }
-
-    if (!senha) {
-      alert("Digite sua senha!");
-      return;
-    }
+    if (cpfLimpo.length !== 11) return alert("Digite um CPF válido!");
+    if (!senha) return alert("Digite sua senha!");
 
     try {
       const response = await fetch('http://localhost:5000/api/auth/login', {
@@ -74,11 +62,8 @@ const Login = () => {
       });
 
       const data = await response.json();
-
       if (response.ok) {
-        // Armazena token para rotas protegidas
         localStorage.setItem('token', data.token);
-
         alert('✅ Login efetuado com sucesso!');
         navigate('/dashboard');
       } else {
@@ -93,18 +78,18 @@ const Login = () => {
   return (
     <div className="login-page">
       <div className="login-container">
-        <form onSubmit={handleLogin}>
-          
+
+        {/* Top Bar com Voltar e Tema */}
+        <div className="top-bar">
+          <Link to="/" className="back-link">
+            <i className="fa-solid fa-arrow-left"></i> Voltar
+          </Link>
           <div className="theme-change">
-            <i className="fa-solid fa-moon" id="themeChangeIcon"></i>
+            <i className="fa-solid fa-moon" id="themeChangeIcon"></i> 
           </div>
+        </div>
 
-          <div className="back-button">
-            <Link to="/">
-              <i className="fa-solid fa-arrow-left"></i>
-            </Link>
-          </div>
-
+        <form onSubmit={handleLogin}>
           <h2>Login</h2>
 
           <div className="input-group">

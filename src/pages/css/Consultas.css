@@ -121,3 +121,16 @@
   transform: scale(1.04);
   z-index: 10;
 }
+.delete-button {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  margin-left: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.delete-button i {
+  pointer-events: none;
+}

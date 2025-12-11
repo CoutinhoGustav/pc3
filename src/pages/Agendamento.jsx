@@ -1,186 +1,98 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import '../pages/css/Agendamento.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "../pages/css/Agendamento.css";
 
 const Agendamento = () => {
-  const [isChatbotVisible, setIsChatbotVisible] = useState(false);
+  const [nome, setNome] = useState("");
+  const [consulta, setConsulta] = useState("");
+  const [data, setData] = useState("");
+  const [hora, setHora] = useState("");
   const [darkTheme, setDarkTheme] = useState(false);
-  const [messages, setMessages] = useState([
-    {
-      text: 'Bem-vindo(a)! Sou a IA Aura, digite oi para começarmos.',
-      sender: 'bot',
-    },
-  ]);
-  const [userInput, setUserInput] = useState('');
-  const [isLoadingResponse, setIsLoadingResponse] = useState(false);
+  const navigate = useNavigate();
+
+  const BACKEND_URL = "http://localhost:5000/api/agendamentos";
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    setDarkTheme(savedTheme === 'dark');
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setDarkTheme(savedTheme === "dark");
   }, []);
 
   useEffect(() => {
-    document.body.classList.toggle('dark-theme', darkTheme);
-    localStorage.setItem('theme', darkTheme ? 'dark' : 'light');
+    document.body.classList.toggle("dark-theme", darkTheme);
+    localStorage.setItem("theme", darkTheme ? "dark" : "light");
   }, [darkTheme]);
 
-  const toggleChatbot = () => setIsChatbotVisible(!isChatbotVisible);
-  const closeChatbot = () => setIsChatbotVisible(false);
-  const toggleTheme = () => setDarkTheme((prev) => !prev);
+  const toggleTheme = () => setDarkTheme(prev => !prev);
 
-  const sendMessage = async () => {
-    if (userInput.trim() === '') return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const newMessage = { text: userInput, sender: 'user' };
-    setMessages((prev) => [...prev, newMessage]);
-    setUserInput('');
-    setIsLoadingResponse(true);
+    if (!nome || !consulta || !data || !hora) {
+      alert("Preencha todos os campos!");
+      return;
+    }
 
     try {
-      const response = await fetch(
-        'http://localhost:5005/webhooks/rest/webhook',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            sender: 'usuario_frontend', // Pode ser um UUID fixo ou gerado por sessão
-            message: userInput,
-          }),
-        }
-      );
+      const res = await fetch(BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome, consulta, data, hora }),
+      });
 
-      const data = await response.json();
+      const dataRes = await res.json();
 
-      if (data.length === 0) {
-        setMessages((prev) => [
-          ...prev,
-          { text: 'Desculpe, não entendi sua mensagem.', sender: 'bot' },
-        ]);
+      if (res.ok) {
+        alert(dataRes.message);
+        setNome("");
+        setConsulta("");
+        setData("");
+        setHora("");
+        navigate("/consultas"); // ⬅ Redireciona para Consultas
       } else {
-        const botMessages = data.map((msg) => ({
-          text: msg.text || '[resposta vazia]',
-          sender: 'bot',
-        }));
-        setMessages((prev) => [...prev, ...botMessages]);
+        alert(dataRes.message || "Erro ao criar agendamento");
       }
-    } catch (error) {
-      console.error('Erro ao comunicar com o Rasa:', error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          text: 'Erro ao se comunicar com a IA. Tente novamente mais tarde.',
-          sender: 'bot',
-        },
-      ]);
-    } finally {
-      setIsLoadingResponse(false);
+    } catch (err) {
+      console.error(err);
+      alert("Erro de conexão com o servidor");
     }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') sendMessage();
   };
 
   return (
     <div className="scheduling-page">
       <div className="top-bar">
-        <Link
-          to="/dashboard"
-          className="back-link"
-          id="backLink"
-          style={{ display: isChatbotVisible ? 'none' : 'flex' }}
-        >
+        <button onClick={() => navigate("/dashboard")}>
           &#8592; Voltar
-        </Link>
-
+        </button>
         <div className="theme-change" onClick={toggleTheme}>
-          <i className={`fa-solid ${darkTheme ? 'fa-sun' : 'fa-moon'}`}></i>
+          <i className={`fa-solid ${darkTheme ? "fa-sun" : "fa-moon"}`}></i>
         </div>
       </div>
 
-      <div
-        className="header"
-        id="schedulingHeader"
-        style={{ display: isChatbotVisible ? 'none' : 'block' }}
-      >
-        Bem Vindo(a) ao Agendamento Consultório Saúde +
-      </div>
+      <h2>Agendamento de Consultas</h2>
 
-      <div
-        className="chatbot-container card"
-        id="chatbotContainer"
-        style={{ display: isChatbotVisible ? 'flex' : 'none' }}
-      >
-        <div className="card-header">
-          <h3 className="h5 mb-0">Chatbot</h3>
-          <button
-            className="btn btn-sm btn-danger"
-            id="closeChatbot"
-            onClick={closeChatbot}
-          >
-            X
-          </button>
+      <form className="agendamento-form" onSubmit={handleSubmit}>
+        <div className="input-group">
+          <label>Nome:</label>
+          <input type="text" value={nome} onChange={e => setNome(e.target.value)} required />
         </div>
 
-        <div className="card-body chatbot-body">
-          {messages.map((msg, index) => (
-            <p
-              key={index}
-              className={`text-left ${
-                msg.sender === 'user' ? 'user-message' : 'bot-message'
-              }`}
-            >
-              <strong>{msg.sender === 'user' ? 'Você: ' : 'Aura IA: '}</strong>
-              {msg.text}
-            </p>
-          ))}
-          {isLoadingResponse && (
-            <p className="text-left bot-message">
-              <strong>Aura IA: </strong>Digitando...
-            </p>
-          )}
+        <div className="input-group">
+          <label>Consulta:</label>
+          <input type="text" value={consulta} onChange={e => setConsulta(e.target.value)} required />
         </div>
 
-        <div className="chatbot-input">
-          <input
-            type="text"
-            id="userInput"
-            placeholder="Digite sua mensagem..."
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            disabled={isLoadingResponse}
-          />
-          <button
-            id="sendButton"
-            onClick={sendMessage}
-            disabled={isLoadingResponse}
-          >
-            Enviar
-          </button>
+        <div className="input-group">
+          <label>Data:</label>
+          <input type="date" value={data} onChange={e => setData(e.target.value)} required />
         </div>
-      </div>
 
-      <div
-        className="informations"
-        id="informationsText"
-        style={{ display: isChatbotVisible ? 'none' : 'block' }}
-      >
-        <section>
-          Para iniciarmos, fale em nosso chat clicando no botão começar.
-        </section>
-      </div>
+        <div className="input-group">
+          <label>Hora:</label>
+          <input type="time" value={hora} onChange={e => setHora(e.target.value)} required />
+        </div>
 
-      <button
-        className="magic-button"
-        id="magicButton"
-        onClick={toggleChatbot}
-        style={{ display: isChatbotVisible ? 'none' : 'block' }}
-      >
-        Começar
-      </button>
+        <button type="submit">Agendar</button>
+      </form>
     </div>
   );
 };
