@@ -7,6 +7,7 @@ const Cadastro = () => {
   const [senha, setSenha] = useState('');
   const navigate = useNavigate();
 
+  // Mascara CPF
   const formatCpf = (value) => {
     const cleaned = value.replace(/\D/g, '').slice(0, 11);
     return cleaned
@@ -17,18 +18,31 @@ const Cadastro = () => {
 
   const handleCpfChange = (e) => setCpf(formatCpf(e.target.value));
 
+  // Função de cadastro
   const handleCadastro = async (e) => {
     e.preventDefault();
 
-    const cpfSemFormatacao = cpf.replace(/\D/g, '');
+    const cpfLimpo = cpf.replace(/\D/g, '');
+
+    if (cpfLimpo.length !== 11) {
+      alert("Digite um CPF válido.");
+      return;
+    }
+
+    if (senha.length < 4) {
+      alert("A senha deve ter pelo menos 4 caracteres.");
+      return;
+    }
+
     try {
       const res = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cpf: cpfSemFormatacao, senha }),
+        body: JSON.stringify({ cpf: cpfLimpo, senha }),
       });
 
       const data = await res.json();
+
       if (res.ok) {
         alert('✅ Cadastro realizado com sucesso!');
         navigate('/login');
@@ -36,7 +50,7 @@ const Cadastro = () => {
         alert(data.message || 'Erro ao cadastrar.');
       }
     } catch (error) {
-      console.error('Erro:', error);
+      console.error('Erro no cadastro:', error);
       alert('Erro de conexão com o servidor.');
     }
   };
@@ -45,6 +59,7 @@ const Cadastro = () => {
     <div className="login-page">
       <div className="login-container">
         <form onSubmit={handleCadastro}>
+
           <div className="back-button">
             <Link to="/login">
               <i className="fa-solid fa-arrow-left"></i>

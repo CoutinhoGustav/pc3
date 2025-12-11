@@ -7,7 +7,7 @@ const Login = () => {
   const [senha, setSenha] = useState('');
   const navigate = useNavigate();
 
-  // 🎨 Controle do modo escuro
+  // 🎨 Modo escuro
   useEffect(() => {
     const themeChangeIcon = document.getElementById("themeChangeIcon");
 
@@ -39,7 +39,7 @@ const Login = () => {
     return () => themeChangeIcon.removeEventListener('click', handleThemeChange);
   }, []);
 
-  // 🧮 Máscara de CPF
+  // 🧮 Máscara do CPF
   const formatCpf = (value) => {
     const cleaned = value.replace(/\D/g, '').slice(0, 11);
     return cleaned
@@ -50,31 +50,43 @@ const Login = () => {
 
   const handleCpfChange = (e) => setCpf(formatCpf(e.target.value));
 
-  // 🔐 Função de login conectada ao backend
+  // 🔐 Função de login
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const cpfSemFormatacao = cpf.replace(/\D/g, '');
+    const cpfLimpo = cpf.replace(/\D/g, '');
+
+    if (cpfLimpo.length !== 11) {
+      alert("Digite um CPF válido!");
+      return;
+    }
+
+    if (!senha) {
+      alert("Digite sua senha!");
+      return;
+    }
 
     try {
       const response = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cpf: cpfSemFormatacao, senha }),
+        body: JSON.stringify({ cpf: cpfLimpo, senha }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
+        // Armazena token para rotas protegidas
+        localStorage.setItem('token', data.token);
+
         alert('✅ Login efetuado com sucesso!');
-        // opcional: salvar token ou usuário no localStorage futuramente
         navigate('/dashboard');
       } else {
         alert(data.message || '❌ CPF ou senha inválidos!');
       }
     } catch (error) {
       console.error('Erro no login:', error);
-      alert('Erro ao conectar ao servidor. Verifique se o backend está rodando.');
+      alert('Erro ao conectar ao servidor.');
     }
   };
 
@@ -82,6 +94,7 @@ const Login = () => {
     <div className="login-page">
       <div className="login-container">
         <form onSubmit={handleLogin}>
+          
           <div className="theme-change">
             <i className="fa-solid fa-moon" id="themeChangeIcon"></i>
           </div>
