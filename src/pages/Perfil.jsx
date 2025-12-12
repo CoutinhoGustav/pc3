@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './css/Perfil.css';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 const Modal = ({ titulo, mensagem, onConfirm, onCancel }) => (
   <div
     className="modal-backdrop"
@@ -163,18 +164,12 @@ const Perfil = () => {
       <aside className="sidebar">
         <h2>Menu</h2>
 
-        <div
-          className="theme-change"
-          onClick={toggleTheme}
-          role="button"
-          tabIndex={0}
-          aria-label="Alternar tema claro/escuro"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') toggleTheme();
-          }}
-        >
-          <i className={`fa-solid ${darkTheme ? 'fa-sun' : 'fa-moon'}`} />
-        </div>
+         {/* Ícone de tema */}
+          <div className="header-right">
+            <div className="theme-change" onClick={toggleTheme}>
+              <FontAwesomeIcon icon={darkTheme ? faSun : faMoon} />
+            </div>
+          </div>
 
         <nav>
           <ul>

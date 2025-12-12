@@ -60,17 +60,13 @@ body {
   color: var(--mainTxtColor);
 }
 
-.chatbot-container {
+.agendamento-card {
   background-color: var(--secondaryColor);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 600px;
-  display: none;
-  flex-direction: column;
-  position: relative;
-  z-index: 1001;
+  max-width: 500px;
 }
 
 .card-header {

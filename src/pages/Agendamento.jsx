@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../pages/css/Agendamento.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
 const Agendamento = () => {
   const [nome, setNome] = useState("");
@@ -59,41 +61,44 @@ const Agendamento = () => {
 
   return (
     <div className="scheduling-page">
-      <div className="top-bar">
-        <button onClick={() => navigate("/dashboard")}>
-          &#8592; Voltar
-        </button>
-        <div className="theme-change" onClick={toggleTheme}>
-          <i className={`fa-solid ${darkTheme ? "fa-sun" : "fa-moon"}`}></i>
-        </div>
+  <div className="top-bar">
+    <button onClick={() => navigate("/dashboard")}>&#8592; Voltar</button>
+    {/* Ícone de tema */}
+          <div className="header-right">
+            <div className="theme-change" onClick={toggleTheme}>
+              <FontAwesomeIcon icon={darkTheme ? faSun : faMoon} />
+            </div>
+          </div>
+  </div>
+
+  <div className="agendamento-card">
+    <h2>Agendamento de Consultas</h2>
+    <form className="agendamento-form" onSubmit={handleSubmit}>
+      <div className="input-group">
+        <label>Nome:</label>
+        <input type="text" value={nome} onChange={e => setNome(e.target.value)} required />
       </div>
 
-      <h2>Agendamento de Consultas</h2>
+      <div className="input-group">
+        <label>Consulta:</label>
+        <input type="text" value={consulta} onChange={e => setConsulta(e.target.value)} required />
+      </div>
 
-      <form className="agendamento-form" onSubmit={handleSubmit}>
-        <div className="input-group">
-          <label>Nome:</label>
-          <input type="text" value={nome} onChange={e => setNome(e.target.value)} required />
-        </div>
+      <div className="input-group">
+        <label>Data:</label>
+        <input type="date" value={data} onChange={e => setData(e.target.value)} required />
+      </div>
 
-        <div className="input-group">
-          <label>Consulta:</label>
-          <input type="text" value={consulta} onChange={e => setConsulta(e.target.value)} required />
-        </div>
+      <div className="input-group">
+        <label>Hora:</label>
+        <input type="time" value={hora} onChange={e => setHora(e.target.value)} required />
+      </div>
 
-        <div className="input-group">
-          <label>Data:</label>
-          <input type="date" value={data} onChange={e => setData(e.target.value)} required />
-        </div>
+      <button type="submit">Agendar</button>
+    </form>
+  </div>
+</div>
 
-        <div className="input-group">
-          <label>Hora:</label>
-          <input type="time" value={hora} onChange={e => setHora(e.target.value)} required />
-        </div>
-
-        <button type="submit">Agendar</button>
-      </form>
-    </div>
   );
 };
 

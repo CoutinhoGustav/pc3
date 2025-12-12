@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import "../pages/css/Consultas.css";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+
 const Consultas = () => {
   const navigate = useNavigate();
   const [darkTheme, setDarkTheme] = useState(false);
@@ -75,9 +78,12 @@ const Consultas = () => {
     <div className="card-dashboard">
       <aside className="sidebar">
         <h2>Menu</h2>
-        <div className="theme-change" onClick={toggleTheme}>
-          <i className={`fa-solid ${darkTheme ? "fa-sun" : "fa-moon"}`}></i>
-        </div>
+         {/* Ícone de tema */}
+                  <div className="header-right">
+                    <div className="theme-change" onClick={toggleTheme}>
+                      <FontAwesomeIcon icon={darkTheme ? faSun : faMoon} />
+                    </div>
+                  </div>
         <nav>
           <ul>
             <li><Link to="/perfil">Perfil</Link></li>
@@ -117,7 +123,7 @@ const Consultas = () => {
                       className="delete-button"
                       onClick={() => excluirConsulta(consulta._id)}
                     >
-                      <i className="fa-solid fa-trash"></i>
+                      <i className="fa-solid fa-trash">Excluir</i>
                     </button>
                   </div>
                 </div>
