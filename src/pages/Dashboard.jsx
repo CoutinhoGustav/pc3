@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../pages/css/Dashboard.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+
 
 const noticias = [
   {
@@ -62,9 +65,11 @@ const Dashboard = () => {
       <aside className="sidebar">
         <h2>Menu</h2>
 
-        <div className="theme-change" onClick={toggleTheme}>
-          <i className={`fa-solid ${darkTheme ? 'fa-sun' : 'fa-moon'}`}></i>
-        </div>
+       
+                 {/* Theme Toggle Icon */}
+                 <div className="theme-change" onClick={toggleTheme}>
+                   <FontAwesomeIcon icon={darkTheme ? faSun : faMoon} />
+                 </div>
 
         <nav>
           <ul>
