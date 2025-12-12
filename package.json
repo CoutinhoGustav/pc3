@@ -17,10 +17,14 @@
     "i": "^0.3.7",
     "jspdf": "^3.0.1",
     "mongoose": "^9.0.1",
+    "next": "^15.5.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.2",
     "react-scripts": "5.0.1",
+    "react-server-dom-parcel": "^19.2.3",
+    "react-server-dom-turbopack": "^19.2.3",
+    "react-server-dom-webpack": "^19.2.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
