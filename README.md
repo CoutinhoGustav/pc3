@@ -25,9 +25,9 @@ O **Consulltório Saúde+** é um projeto de uma pequena rede de consultórios m
 
 | Integrante | Responsabilidades |
 |------------|-------------------|
-| **Luciana** | Apresentação do projeto • Documentação |
+| **Luciana** | Documentação • Protótipo |
 | **Victor Gabriel Alves de Carvalho Xavier** | Desenvolvimento Mobile • Documentação |
-| **Gustavo** (Frontend & Mobile) | Desenvolvimento da interface em React • Criação de telas de agendamento • Estilização com CSS • Documentação |
+| **Gustavo** (Frontend) | Desenvolvimento da interface em React • Criação de telas de agendamento • Estilização com CSS • Documentação |
 
 ---
 
@@ -42,6 +42,29 @@ O **Consulltório Saúde+** é um projeto de uma pequena rede de consultórios m
 ##  Estrutura do projeto
 ```
 pc3/
+├── backend/
+│   ├── config/
+│   │   ├── db.js              # Conexão com MongoDB
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   │   ├── agendamentoController.js
+│   │   │   └── authController.js
+│   │   │
+│   │   ├── models/
+│   │   │   ├── User.js
+│   │   │   └── Agendamento.js
+│   │   │
+│   │   ├── routes/
+│   │   │   ├── auth.js
+│   │   │   └── agendamentoRoutes.js
+│   │   │
+│   │   ├── middlewares/
+│   │   │   ├── authMiddleware.js
+│   │   │   └── errorMiddleware.js
+│   │   │
+│   │   ├── utils/
+│   │   │   └── generateToken.js
+│   │   └── server.js              
 ├── public/
 │   ├── index.html
 │   └── vite.svg
@@ -92,6 +115,7 @@ cd frontend/projeto-react
 ```bash
 npm install
 npm install react-router-dom
+npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/fontawesome-svg-core
 ```
 
 ### Executar o projeto
